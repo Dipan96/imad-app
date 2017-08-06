@@ -5,7 +5,8 @@ var path = require('path');
 var app = express();
 app.use(morgan('combined'));
 
-var articleOne={
+var articles={
+'article-one':{
     title: ' Article one of Dipan',
     heading: 'Article One',
     date: 'August 6,2017',
@@ -19,7 +20,27 @@ var articleOne={
                   <p>
                       This is the first edited file i am deploying in the webapp development.Hope you all will like it immensely.Thank you!!!
                   </p>`
-};
+},
+'article-two':{
+    title: ' Article Two of Dipan',
+    heading: 'Article Two',
+    date: 'August 7,2017',
+    content:
+    ` <p>
+                      This is the content for my second article.I am learning IMAD pretty fast.
+                      </p>
+    `
+},
+'article-three':{
+     title: ' Article Three of Dipan',
+    heading: 'Article Three',
+    date: 'August 8,2017',
+    content:
+    ` <p>
+                      This is the content for my third article.I almost doing great in IMAD.
+                  </p>
+    `
+}
 function createTemplate (data) {
     var title=data.title;
     var date= data.date;
@@ -63,17 +84,12 @@ app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, 'ui', 'index.html'));
 });
 
-app.get('/Article-one', function(req,res){
-   res.send(createTemplate(articleOne));
+app.get('/:articleName', function(req,res){
+    var articleName=req.params.articleName;
+   res.send(createTemplate(articles[articleName]));
 });
 
-app.get('/Article-two', function(req,res){
-   res.sendFile(path.join(__dirname, 'ui', 'article-two.html'));
-});
 
-app.get('/Article-three', function(req,res){
-   res.sendFile(path.join(__dirname, 'ui', 'article-three.html'));
-});
 
 app.get('/ui/style.css', function (req, res) {
   res.sendFile(path.join(__dirname, 'ui', 'style.css'));
