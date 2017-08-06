@@ -5,12 +5,66 @@ var path = require('path');
 var app = express();
 app.use(morgan('combined'));
 
+var articleOne={
+    title: ' Article one of Dipan',
+    heading: 'Article One',
+    date: 'August 6,2017',
+    content:
+       `<p>
+                      This is the content for my first article.I am doing my first webapp development.i hope you all gonna like it.
+                  </p>
+                  <p>
+                      I am learning this course from NPTEL.tanmay sir is really giving us the best to cope up easily with the course without having less difficulties.
+                  </p>
+                  <p>
+                      This is the first edited file i am deploying in the webapp development.Hope you all will like it immensely.Thank you!!!
+                  </p>`
+};
+function createTemplate (data) {
+    var title=data.title;
+    var date= data.date;
+    var heading= data.heading;
+    var content= data.content;
+var htmlTemplate=`<html>
+    <head>
+        <title>
+            ${title}
+        </title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="/ui/style.css" rel="stylesheet" />
+        
+          </head>
+          <body>
+              <div class="container">
+                  <div>
+                  <a href='/'>Home</a>
+              </div>
+              <hr/>
+              <h3>
+                  ${heading}
+              </h3>
+              <div>
+                  ${date}
+              </div>
+              <div>
+                 ${content}
+              </div>
+              </div>
+          </body>
+ </html>
+
+
+
+`;
+return htmlTemplate;
+}
+
 app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, 'ui', 'index.html'));
 });
 
 app.get('/Article-one', function(req,res){
-   res.sendFile(path.join(__dirname, 'ui', 'article-one.html'));
+   res.send(createTemplate(articleOne));
 });
 
 app.get('/Article-two', function(req,res){
